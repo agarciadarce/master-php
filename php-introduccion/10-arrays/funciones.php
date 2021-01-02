@@ -20,5 +20,6 @@
     echo "<br/>";
     var_dump(array_reverse($cantantes));
     var_dump(array_search('XD', $cantantes));
-    
+
+
 ?>
