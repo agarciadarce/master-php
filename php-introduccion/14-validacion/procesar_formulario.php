@@ -1,15 +1,29 @@
 <?php
-if(isset($_POST['nombre']) && isset($_POST['apellido'])  && isset($_POST['edad'])  && isset($_POST['email'])){
+$error = "";
+if(!empty($_POST['nombre']) && !empty($_POST['apellido'])  && !empty($_POST['edad'])  && !empty($_POST['email'])){
     $nombre = $_POST['nombre'];
     $apellido = $_POST['apellido'];
     $edad = $_POST['edad'];
     $email = $_POST['email'];
-
+    if(!is_string($nombre) || preg_match("/[0-9]+/", $nombre)){
+        $error = $error."Nombre incorrecto<br>";
+    }
+    if(!is_string($apellido) || preg_match("/[0-9]+/", $apellido)){
+        $error = $error."Apellido incorrecto<br>";
+    }
+    if(!is_int($edad) || !filter_var($edad, FILTER_VALIDATE_INT)){
+        $error = $error."Edad incorrecta<br>";
+    }
+    if(!is_string($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)){
+        $error = $error."Email incorrecto<br>";
+    }
+    
 }else{
-    $error = "aiudaaaaaaaaaaaaaa";
-    header("Location:index.php?error=$error");
+    $error = $error."aiudaaaaaaaaaaaaaa";
+    
 }
-
+var_dump($error);
+header("Location:index.php?error=$error");
 ?>
 
 <!DOCTYPE html>
@@ -20,6 +34,11 @@ if(isset($_POST['nombre']) && isset($_POST['apellido'])  && isset($_POST['edad']
     <title>Document</title>
 </head>
 <body>
-    
+    <?php if($error == "ok"): ?>
+        <p><?=$nombre?> </p>
+        <p><?=$apellido?> </p>
+        <p><?=$edad?> </p>
+        <p><?=$email?> </p>
+    <?php endif; ?>
 </body>
 </html>
