@@ -1,5 +1,5 @@
 <?php 
-var_dump($_POST);
+session_start();
 if(isset($_POST)){
 
     // recoger los valores del formulario
@@ -43,6 +43,9 @@ if(isset($_POST)){
         // insertar usuario en la bd
         $guardar_usuario = true;
 
+    }else{
+        $_SESSION['errores'] = $errores;
+        header('Location: index.php');
     }
     // pendiente clase 195
 }
